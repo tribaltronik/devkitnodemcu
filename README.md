@@ -1,6 +1,8 @@
 # devkitnodemcu
 ControlBoard.net DevKit NodeMCU
 
+![alt tag](https://github.com/tribaltronik/devkitnodemcu/blob/master/DevkitNodeMCU.jpg)
+
 Components:
 * 1 x DHT22 - Temperature and humidity sensor (1 pin digital)
 * 1 x MQ135 - Ar Quality Sensor (1 analog pin)
