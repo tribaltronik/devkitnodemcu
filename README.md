@@ -3,14 +3,13 @@ ControlBoard.net DevKit NodeMCU
 
 ![alt tag](https://github.com/tribaltronik/devkitnodemcu/blob/master/DevkitNodeMCU.jpg)
 
-
 Components:
 * 1 x DHT22 - Temperature and humidity sensor (1 pin digital)
 * 1 x MQ135 - Ar Quality Sensor (1 analog pin)
 * 1 x HC-SR501 - Motion sensor (1 pin interrupt)
 * 1 x Led RBG
 
-If you want to buy this kit click here:
+If you want to BUY this kit click here:
 http://www.ebay.com/itm/Smart-Home-DevKit-DIY-ControlBoard-Net-NodeMCU-Based-/131641456092?ssPageName=ADME:L:LCA:US:1123
 
 
