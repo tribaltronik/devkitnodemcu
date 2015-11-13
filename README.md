@@ -27,3 +27,8 @@ Files description:
 -  initwifi.lua
 -  init.lua : init file that try to connect to wifi with authentication on file config.lua and if fails starts AP for wifi config
 
+How to use:
+- Power the Dev Kit NodeMCU;
+- In a device (Smartphone, Tablet) connect to wifi AP "controlboardkit" with the password "12345678";
+- When connected, open your browser and entry this url: "192.168.4.1";
+- Select your home wifi network and password;
