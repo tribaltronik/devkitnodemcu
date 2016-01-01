@@ -1,107 +1,51 @@
--- ***************************************************************************
--- DHT22 module for ESP8266 with nodeMCU
---
--- Written by Javier Yanez 
--- but based on a script of Pigs Fly from ESP8266.com forum
---
--- MIT license, http://opensource.org/licenses/MIT
--- ***************************************************************************
-
-local moduleName = ...
-local M = {}
-_G[moduleName] = M
-
-local humidity
-local temperature
-
-function M.read(pin)
-  local checksum
-  local checksumTest
-  humidity = 0
-  temperature = 0
-  checksum = 0
-
-  -- Use Markus Gritsch trick to speed up read/write on GPIO
-  local gpio_read = gpio.read
-  
-  local bitStream = {}
-  for j = 1, 40, 1 do
-    bitStream[j] = 0
-  end
-  local bitlength = 0
-
-  -- Step 1:  send out start signal to DHT22
-  gpio.mode(pin, gpio.OUTPUT)
-  gpio.write(pin, gpio.HIGH)
-  tmr.delay(150)
-  gpio.write(pin, gpio.LOW)
-  --tmr.delay(20000)
-  tmr.delay(40)
-  --delayMicroseconds(40)
-  --gpio.write(pin, gpio.HIGH)
-  gpio.mode(pin, gpio.INPUT)
-
-  -- Step 2:  DHT22 send response signal 
-  -- bus will always let up eventually, don't bother with timeout
-  while (gpio_read(pin) == 0 ) do end
-  local c=0
-  while (gpio_read(pin) == 1 and c < 500) do c = c + 1 end
-  -- bus will always let up eventually, don't bother with timeout
-  while (gpio_read(pin) == 0 ) do end
-  c=0
-  while (gpio_read(pin) == 1 and c < 500) do c = c + 1 end
-  
-  -- Step 3: DHT22 send data
-  for j = 1, 40, 1 do
-    while (gpio_read(pin) == 1 and bitlength < 10 ) do
-      bitlength = bitlength + 1
-    end
-    bitStream[j] = bitlength
-    bitlength = 0
-    -- bus will always let up eventually, don't bother with timeout
-    while (gpio_read(pin) == 0) do end
-  end
-
-  --DHT data acquired, process.
-  for i = 1, 16, 1 do
-    if (bitStream[i] > 4) then
-      humidity = humidity + 2 ^ (16 - i)
-    end
-  end
-  for i = 1, 16, 1 do
-    if (bitStream[i + 16] > 4) then
-      temperature = temperature + 2 ^ (16 - i)
-    end
-  end
-  for i = 1, 8, 1 do
-    if (bitStream[i + 32] > 4) then
-      checksum = checksum + 2 ^ (8 - i)
-    end
-  end
-
-  checksumTest = (bit.band(humidity, 0xFF) + bit.rshift(humidity, 8) + bit.band(temperature, 0xFF) + bit.rshift(temperature, 8))
-  checksumTest = bit.band(checksumTest, 0xFF)
-
-  if temperature > 0x8000 then
-    -- convert to negative format
-    temperature = -(temperature - 0x8000)
-  end
-
-  -- conditions compatible con float point and integer
-  if (checksumTest - checksum >= 1) or (checksum - checksumTest >= 1) then
-    humidity = nil
-  end
-  --Per DHT Arduino Lib
-  gpio.mode(pin, gpio.OUTPUT)
-  gpio.write(pin, gpio.HIGH)
+local e=...local a={}_G[e]=a
+local o
+local d
+function a.read(e)local r
+local t
+o=0
+d=0
+r=0
+local i=gpio.read
+local l={}for e=1,40,1 do
+l[e]=0
 end
-
-function M.getTemperature()
-  return temperature
+local a=0
+gpio.mode(e,gpio.OUTPUT)gpio.write(e,gpio.HIGH)tmr.delay(100)gpio.write(e,gpio.LOW)tmr.delay(40)gpio.mode(e,gpio.INPUT)while(i(e)==0)do end
+local n=0
+while(i(e)==1 and n<500)do n=n+1 end
+while(i(e)==0)do end
+n=0
+while(i(e)==1 and n<500)do n=n+1 end
+for d=1,40,1 do
+while(i(e)==1 and a<10)do
+a=a+1
 end
-
-function M.getHumidity()
-  return humidity
+l[d]=a
+a=0
+while(i(e)==0)do end
 end
-
-return M
+for e=1,16,1 do
+if(l[e]>4)then
+o=o+2^(16-e)end
+end
+for e=1,16,1 do
+if(l[e+16]>4)then
+d=d+2^(16-e)end
+end
+for e=1,8,1 do
+if(l[e+32]>4)then
+r=r+2^(8-e)end
+end
+t=(bit.band(o,255)+bit.rshift(o,8)+bit.band(d,255)+bit.rshift(d,8))t=bit.band(t,255)if d>32768 then
+d=-(d-32768)end
+if(t-r>=1)or(r-t>=1)then
+o=nil
+end
+gpio.mode(e,gpio.OUTPUT)gpio.write(e,gpio.HIGH)
+end
+function a.getTemperature()return d
+end
+function a.getHumidity()return o
+end
+return a

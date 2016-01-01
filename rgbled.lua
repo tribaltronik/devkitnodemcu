@@ -1,8 +1,10 @@
+-- file : rgbled.lua
+local module = {}  
 
 -- Pin Declarations
-PIN_RED = 6
+PIN_RED = 8
 PIN_GRN = 7
-PIN_BLU = 8
+PIN_BLU = 6
 
 
 
@@ -22,23 +24,28 @@ end
 
 -- Basic color function used for boot animations.
 -- Set LED red, green, blue or white
-function rgb_solid(mode)
-    if mode == 0 then
+function module.color(mode)
+    if mode == "red" then
         -- RED MODE
         pwm.setduty(PIN_RED, 512)
         pwm.setduty(PIN_GRN, 0)
         pwm.setduty(PIN_BLU, 0)
-    elseif mode == 1 then
+    elseif mode == "green" then
         -- GREEN MODE
         pwm.setduty(PIN_RED, 0)
         pwm.setduty(PIN_GRN, 512)
         pwm.setduty(PIN_BLU, 0)
-    elseif mode == 2 then
+    elseif mode == "blue" then
         -- BLUE MODE
         pwm.setduty(PIN_RED, 0)
         pwm.setduty(PIN_GRN, 0)
         pwm.setduty(PIN_BLU, 512)
-    else
+    elseif mode == "yellow" then
+        -- yellow MODE
+        pwm.setduty(PIN_RED, 512)
+        pwm.setduty(PIN_GRN, 512)
+        pwm.setduty(PIN_BLU, 0)    
+    elseif mode == "white" then
         -- WHITE MODE
         pwm.setduty(PIN_RED, 512)
         pwm.setduty(PIN_GRN, 512)
@@ -48,4 +55,6 @@ end
 
 
 -- LED Initialization
-rgb_init(500, 512)
+rgb_init(100, 128)
+
+return module 
