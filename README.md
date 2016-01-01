@@ -19,12 +19,13 @@ Use the ESPLORER:
 - http://esp8266.ru/esplorer/
 
 Files description:
-- config.lua : Store the wifi authentication
+-  config.lua : Store the MQTT server URL 
 -  dht22.lua : library to read dht22
--  mqtt.lua : code to read dht22,movement,gas sensor and send to server with protocol MQTT
+-  application.lua : code to read dht22,movement,gas sensor and send to server with protocol MQTT
 -  rgbled.lua : code to rgbled
--  configap-lua : Config ap to config wifi
--  initwifi.lua
+-  configap.lua : Config ap to config wifi
+-  wificonfig.lua : Store the wifi authentication and secretkey for MQTT
+-  start.lua
 -  init.lua : init file that try to connect to wifi with authentication on file config.lua and if fails starts AP for wifi config
 
 How to use:
